@@ -56,7 +56,6 @@ sed -i -e "s/{{ Company }}/$COMPANY/g" -e "s/{{ Authors }}/$AUTHORS/g"  Director
 
 echo "Creating $PACKAGE_NAME project..."
 dotnet new classlib --name $PACKAGE_NAME --output $SRC/$PACKAGE_NAME --framework netstandard2.0
-dotnet add $SRC/$PACKAGE_NAME/$PACKAGE_NAME.csproj package Apache.Avro --version 1.11.0
 rm -f ./$SRC/$PACKAGE_NAME/Class1.cs
 
 echo "Adding Avro files..."
