@@ -1,12 +1,13 @@
 PWD:=$(shell pwd)
+DOCKER?=$(shell command -v docker 2>/dev/null || command -v podman)
 
 .PHONY: pack-build
 pack-build:
-	docker build -t avro-nuget-packer ./pack
+	$(DOCKER) build -t avro-nuget-packer ./pack
 
 .PHONY: pack-run
 pack-run:
-	docker run --rm -it --name avro-nuget-packer \
+	$(DOCKER) run --rm -it --name avro-nuget-packer \
 		--volume $(PWD)/../avro-nuget-sandbox/contracts:/contracts --volume $(PWD)/artifacts:/artifacts \
 		avro-nuget-packer \
 			--package-name=EP.Avro-NuGet-Sandbox.Contracts \
@@ -20,7 +21,7 @@ pack-run:
 #--------- Debugging ---------------------------------------
 .PHONY: pack-shell
 pack-shell:
-	docker run --rm -it --name avro-nuget-packer \
+	$(DOCKER) run --rm -it --name avro-nuget-packer \
 		--volume $(PWD)/../avro-nuget-sandbox/contracts:/contracts --volume $(PWD)/artifacts:/artifacts \
 		--entrypoint /bin/sh \
 		avro-nuget-packer 
